@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo/wordmark.png" alt="BrowserNro" width="460">
+  <img src="assets/logo/banner.png" alt="BrowserNro" width="760">
 </p>
 
 # BrowserNro

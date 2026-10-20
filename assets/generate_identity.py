@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 """
+SUPERADO pela arte oficial do BrowserNro (assets/logo/banner.png, fornecida
+pelo autor do projeto) — o icone atual (assets/icon/icon.jpg) e um recorte
+dessa arte, nao mais gerado por este script. Mantido apenas como gerador de
+fallback/placeholder (paleta azul-marinho + ciano + laranja), caso seja
+preciso recriar algo rapido sem a arte oficial.
+
 Gera a identidade visual do BrowserNro: icone NRO (JPEG 256x256, exigido pelo
 nacptool do libnx) e um logotipo maior para documentacao/splash screen.
 
 Conceito: um globo/rede estilizada (navegacao na internet) atras de uma janela
-de navegador minimalista, em paleta propria (azul-marinho + ciano + laranja),
-sem reproduzir cores, formas ou simbolos de navegadores existentes (Chrome,
-Firefox, Edge, Safari) nem logotipos da Nintendo.
+de navegador minimalista, sem reproduzir cores, formas ou simbolos de
+navegadores existentes (Chrome, Firefox, Edge, Safari) nem logotipos da
+Nintendo.
 """
 import math
 from PIL import Image, ImageDraw
