@@ -20,3 +20,13 @@ Afeta apenas `gx/host_nx.c` (a camada específica do Horizon OS); não toca em
 nenhum arquivo usado pelo banco de testes de PC (`host_posix.c`), então pode
 ser aplicado com segurança depois das etapas 1–6 de `BUILD.md` e antes da
 etapa 8 (cross-build para o Switch).
+
+## `0002-browsernro-text.sh`
+
+Troca as últimas strings visíveis ao usuário que ainda diziam "Chromium NX"
+em vez de "BrowserNro": o título mostrado no menu de desenvolvimento da
+engine e o aviso de tela cheia que aparece quando o espaço de endereçamento
+de 39 bits não foi configurado ("Install Chromium NX as a forwarder with
+Sphaira..." → "Install BrowserNro as a forwarder with Sphaira..."). Puramente
+cosmético — não muda nenhum comportamento. Também afeta só `gx/host_nx.c` e
+pode ser aplicado junto com `0001-browsernro-dir.sh`.

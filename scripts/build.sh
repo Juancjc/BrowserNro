@@ -62,8 +62,9 @@ docker exec lkl-gx bash /project/gx/build-pc.sh
 echo "## Step 6: build Chromium's root filesystem (Debian arm64 chromium-shell)"
 docker exec lkl-gx bash /project/gx/build-chromium.sh
 
-echo "## Step 6b: apply the BrowserNro install-directory patch (see patches/README.md)"
+echo "## Step 6b: apply BrowserNro patches (directory/log + user-visible text — see patches/README.md)"
 bash "$HERE/patches/0001-browsernro-dir.sh" "$ENGINE_DIR"
+bash "$HERE/patches/0002-browsernro-text.sh" "$ENGINE_DIR"
 
 echo "## Step 7: devkitA64-based build image (Dockerfile) + lkl-gx-nx container"
 docker build -t browsernro/lkl-gx-nx -f "$HERE/Dockerfile" "$HERE"
