@@ -120,6 +120,24 @@
 - [ ] Reportar ao autor do chromium-nx a lacuna do Dockerfile
       (libavcodec-dev/libavutil-dev ausentes).
 
+## Atualização — release v0.1.0 publicada
+
+Publicado `BrowserNro.nro`/`BrowserNro.zip` como
+[release v0.1.0](https://github.com/Juancjc/BrowserNro/releases/tag/v0.1.0)
+no GitHub (decisão do usuário, documentada no histórico de conversa — ciente
+do caveat de licença em LICENSING.md).
+
+Durante isso, descobrimos que o chromium-nx upstream lançou sua própria
+release (`0.0.1`, já com 1000+ downloads) e documenta um método de
+instalação melhor do que o nosso original: usar o **Sphaira**
+(gerenciador de títulos homebrew) para criar um **forwarder** com espaço de
+endereçamento de 39 bits, em vez de substituir `atmosphere/hbl.nsp` do
+sistema. Isso não modifica nenhum arquivo do CFW do usuário — mais alinhado
+com a regra de não mexer em arquivos críticos do Switch. Atualizamos
+README.md para recomendar esse método como principal, mantendo a troca de
+`hbl.nsp` como alternativa opcional para quem não quiser instalar o
+Sphaira.
+
 ## Como retomar
 
 ```bash

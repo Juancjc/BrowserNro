@@ -83,12 +83,36 @@ detalhamento do que vem pronto da engine e o que é camada do BrowserNro.
 
 ## Instalação
 
-1. Switch V1 com Atmosphère (CFW) instalado e Homebrew Menu funcionando.
+O BrowserNro precisa de um espaço de endereçamento de **39 bits** (os
+alocadores do Chromium não cabem nos 36 bits padrão do Homebrew Loader) —
+veja ARCHITECTURE.md. Há duas formas de conseguir isso; a primeira é a
+recomendada, pois **não mexe em nenhum arquivo do seu CFW**.
+
+### Opção recomendada: forwarder via Sphaira
+
+Este é o método usado pela própria engine upstream (chromium-nx), já testado
+por milhares de usuários:
+
+1. Switch V1 com Atmosphère (CFW) instalado.
 2. Copie o conteúdo de `dist/BrowserNro.zip` para a raiz do cartão microSD
    (cria `/switch/BrowserNro/`).
-3. Abra o **Homebrew Menu** segurando **R** ao iniciar um jogo/album (dá mais
-   memória ao app — modo Application, recomendado).
-4. Inicie **BrowserNro**.
+3. Instale o [Sphaira](https://github.com/ITotalJustice/sphaira) (gerenciador
+   de títulos homebrew) se ainda não tiver.
+4. No Sphaira: pressione **X** → **Install Forwarder** → selecione
+   `BrowserNro.nro` → defina o espaço de endereçamento para **39-bit** →
+   **Create Forwarder**.
+5. O BrowserNro aparece agora no **menu principal do Switch** (não no
+   Homebrew Menu) como um título normal — inicie por lá.
+
+### Opção alternativa: Homebrew Loader customizado
+
+Para quem prefere não instalar o Sphaira, o pacote também inclui, em
+`ATMOSPHERE-HBL-OPCIONAL-LEIA-ANTES/`, um `hbl.nsp` de 39 bits que substitui
+o Homebrew Loader padrão do seu cartão SD. **Isso não é aplicado
+automaticamente** — leia o aviso na pasta (faça backup do seu `hbl.nsp`
+atual antes) e, depois de trocá-lo, abra o Homebrew Menu normalmente
+(segurando **R** ao iniciar um jogo, para o modo Application, com mais
+memória) e inicie o BrowserNro por lá.
 
 Instruções completas, incluindo build a partir do código-fonte, em
 [BUILD.md](BUILD.md).
