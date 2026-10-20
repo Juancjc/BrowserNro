@@ -1,0 +1,72 @@
+name: Build BrowserNro
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/**'
+      - 'patches/**'
+      - 'source/**'
+      - 'assets/**'
+      - 'Dockerfile'
+      - '.github/workflows/build.yml'
+
+jobs:
+  build:
+    # NOTE: this reproduces the build pipeline described in BUILD.md on a
+    # hosted Linux runner. It validates that the pipeline itself still works
+    # (the upstream engine repo, LKL, and Debian's arm64 chromium-shell
+    # package all still resolve and compile) — it does NOT test on real
+    # Nintendo Switch hardware, which no CI runner has. See TESTING.md.
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Free up disk space on the runner
+        run: |
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/.ghcup /usr/local/lib/android
+          docker image prune -af
+
+      - name: Set up QEMU (arm64 emulation for Docker)
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+
+      - name: Set up Python (for identity assets + packaging)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install Pillow and regenerate identity assets
+        run: |
+          pip install --quiet pillow
+          python assets/generate_identity.py || echo "skipped: fonts may differ on the runner; assets/icon and assets/logo are also committed as fallback"
+
+      - name: Run the BrowserNro build pipeline
+        run: bash scripts/build.sh
+        env:
+          DEBIAN_FRONTEND: noninteractive
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build/build.log
+          if-no-files-found: warn
+
+      - name: Upload BrowserNro.nro (CI artifact only — not a public release)
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: BrowserNro-nro
+          path: dist/BrowserNro.nro
+          if-no-files-found: error
+
+      # Intentionally NOT uploading dist/BrowserNro.zip as a GitHub Release
+      # asset here: the engine's upstream license is unspecified
+      # (see LICENSING.md). Public binary releases should wait for license
+      # clarification from the upstream author, or an explicit decision by
+      # the maintainers to accept that risk.

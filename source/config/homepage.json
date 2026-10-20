@@ -1,0 +1,5 @@
+{
+  "_comment": "Pagina inicial padrao do BrowserNro. Consumido por scripts/package.sh, que gera o programs.txt da engine com esta URL. Editar aqui e rodar scripts/package.sh novamente para trocar a pagina inicial padrao (ainda nao e uma tela de configuracoes dentro do navegador -- ver ARCHITECTURE.md e KNOWN_ISSUES.md).",
+  "homepage_url": "https://www.google.com/",
+  "label": "BrowserNro"
+}

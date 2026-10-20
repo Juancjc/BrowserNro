@@ -1,0 +1,17 @@
+{
+  "_comment": "Mapeamento de controles do BrowserNro. As entradas marcadas 'native' ja sao lidas diretamente pela engine (gx/host_nx.c, gx/wl.c) via libnx, conforme o proprio README do chromium-nx. As marcadas 'planned' sao a extensao do BrowserNro (ex.: alternancia de abas) e dependem do suporte a multiplas abas ainda nao confirmado em hardware -- ver KNOWN_ISSUES.md.",
+  "mapping": [
+    { "input": "A",                  "action": "selecionar / seguir link / abrir teclado em campo de texto", "source": "native" },
+    { "input": "B",                  "action": "voltar",                 "source": "native" },
+    { "input": "X",                  "action": "atualizar",              "source": "native" },
+    { "input": "Y",                  "action": "barra de enderecos",     "source": "native" },
+    { "input": "L",                  "action": "aba anterior",           "source": "planned" },
+    { "input": "R",                  "action": "proxima aba",            "source": "planned" },
+    { "input": "+",                  "action": "menu",                   "source": "native (menu de desenvolvimento da engine; menu proprio do BrowserNro planejado)" },
+    { "input": "-",                  "action": "configuracoes",          "source": "planned" },
+    { "input": "analogico_esquerdo", "action": "cursor",                 "source": "planned" },
+    { "input": "analogico_direito",  "action": "rolagem",                "source": "native" },
+    { "input": "touchscreen",        "action": "toque e gestos",         "source": "native" },
+    { "input": "dpad",               "action": "mover foco entre links", "source": "native" }
+  ]
+}

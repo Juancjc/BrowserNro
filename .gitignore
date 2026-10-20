@@ -1,0 +1,25 @@
+# Entire build workspace: the cloned engine (never vendored — its upstream
+# license is unspecified, see LICENSING.md), logs, and staged packaging
+# output. All of it is reproduced by `bash scripts/build.sh`.
+/build/
+
+# Local research clones (reference material, not part of this project's source)
+/research/
+
+# Docker / LKL work volumes mounted from the host, if ever bind-mounted here
+/work/
+
+# Compiled artifacts (not committed — see LICENSING.md on binary distribution)
+/dist/*.nro
+/dist/*.nsp
+/dist/*.zip
+/dist/*.elf
+/dist/*.nacp
+*.o
+*.map
+*.log
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp

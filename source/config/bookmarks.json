@@ -1,0 +1,8 @@
+{
+  "_comment": "Favoritos padrao sugeridos para o primeiro uso. Nao ha, nesta versao, uma UI nativa de favoritos dentro do navegador (ver KNOWN_ISSUES.md); esta lista documenta a intencao e alimenta uma futura tela de favoritos.",
+  "bookmarks": [
+    { "title": "Google", "url": "https://www.google.com/" },
+    { "title": "Wikipedia", "url": "https://www.wikipedia.org/" },
+    { "title": "YouTube", "url": "https://www.youtube.com/" }
+  ]
+}

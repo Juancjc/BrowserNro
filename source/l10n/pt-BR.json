@@ -1,0 +1,19 @@
+{
+  "_comment": "Strings em pt-BR reservadas para uma futura UI nativa de configuracoes/erros do BrowserNro. Nao sao, nesta versao, renderizadas dentro do navegador -- a interface visivel hoje e a do proprio Chromium (chromium-shell), que nao e localizada por este projeto. Ver KNOWN_ISSUES.md.",
+  "strings": {
+    "app_name": "BrowserNro",
+    "menu_title": "BrowserNro",
+    "settings": "Configuracoes",
+    "history": "Historico",
+    "bookmarks": "Favoritos",
+    "downloads": "Downloads",
+    "back": "Voltar",
+    "forward": "Avancar",
+    "reload": "Recarregar",
+    "home": "Pagina inicial",
+    "address_bar_placeholder": "Digite um endereco ou pesquise",
+    "error_connection_title": "Nao foi possivel carregar a pagina",
+    "error_connection_body": "Verifique sua conexao com a internet e tente novamente.",
+    "loading": "Carregando..."
+  }
+}

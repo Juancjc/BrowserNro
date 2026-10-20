@@ -1,0 +1,16 @@
+# Force LF everywhere, even on a Windows checkout — shell scripts here run
+# inside Linux containers/WSL (scripts/*.sh, patches/*.sh) and a CRLF
+# shebang line breaks bash with "bad interpreter" errors.
+* text=auto eol=lf
+
+*.sh text eol=lf
+*.py text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+Makefile text eol=lf
+Dockerfile text eol=lf
+
+*.jpg binary
+*.png binary
+*.zip binary
+*.nro binary
