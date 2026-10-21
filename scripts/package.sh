@@ -28,23 +28,39 @@ else
 	echo "WARNING: lkl-gx container not running — cannot fetch chromium.ext4; run scripts/build.sh first" >&2
 fi
 
-echo "== generating programs.txt from source/config/homepage.json"
-"$PYEXE" - "$HERE/source/config/homepage.json" "$APP/programs.txt" <<'PYEOF'
+echo "== generating programs.txt from homepage.json + bookmarks.json (one shortcut per entry)"
+"$PYEXE" - "$HERE/source/config/homepage.json" "$HERE/source/config/bookmarks.json" "$APP/programs.txt" <<'PYEOF'
 import json, sys
-cfg = json.load(open(sys.argv[1], encoding="utf-8"))
-url = cfg["homepage_url"]
-label = cfg.get("label", "BrowserNro")
-cmd = (
-	f"[{label}] -w -b @chromium.ext4 /usr/lib/chromium/chromium-shell --no-sandbox "
-	"--single-process --no-zygote --use-gl=angle --use-angle=gles-egl "
-	"--ignore-gpu-blocklist --disable-gpu-sandbox --in-process-gpu "
-	f"--ozone-platform=wayland --enable-spatial-navigation --remote-debugging-pipe {url}"
-)
-with open(sys.argv[2], "w", encoding="utf-8", newline="\n") as f:
-	f.write("# Gerado por scripts/package.sh a partir de source/config/homepage.json\n")
-	f.write("# Um unico item: o BrowserNro abre direto nele (sem menu de escolha).\n")
-	f.write(cmd + "\n")
-print("programs.txt:", cmd)
+
+homepage_path, bookmarks_path, out_path = sys.argv[1:4]
+
+def command_for(label, url):
+	return (
+		f"[{label}] -w -b @chromium.ext4 /usr/lib/chromium/chromium-shell --no-sandbox "
+		"--single-process --no-zygote --use-gl=angle --use-angle=gles-egl "
+		"--ignore-gpu-blocklist --disable-gpu-sandbox --in-process-gpu "
+		f"--ozone-platform=wayland --enable-spatial-navigation --remote-debugging-pipe {url}"
+	)
+
+home = json.load(open(homepage_path, encoding="utf-8"))
+bookmarks = json.load(open(bookmarks_path, encoding="utf-8")).get("bookmarks", [])
+
+lines = [command_for(home.get("label", "BrowserNro"), home["homepage_url"])]
+for b in bookmarks:
+	# Skip a bookmark that's identical to the homepage, to avoid a duplicate entry.
+	if b["url"] == home["homepage_url"]:
+		continue
+	lines.append(command_for(b["title"], b["url"]))
+
+with open(out_path, "w", encoding="utf-8", newline="\n") as f:
+	f.write("# Gerado por scripts/package.sh a partir de source/config/homepage.json e bookmarks.json.\n")
+	f.write("# Um item por atalho -- escolha com o d-pad e confirme com A ao abrir o BrowserNro.\n")
+	for line in lines:
+		f.write(line + "\n")
+
+print(f"programs.txt: {len(lines)} atalho(s)")
+for line in lines:
+	print(" ", line.split(" ", 1)[0])
 PYEOF
 
 cp "$HERE/source/config/homepage.json" "$APP/config/homepage.json"

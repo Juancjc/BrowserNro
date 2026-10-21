@@ -7,8 +7,12 @@ BrowserNro, consumida pelos scripts em `scripts/`:
 
 - `config/homepage.json` — página inicial padrão; usado por
   `scripts/package.sh` para gerar o `programs.txt` que a engine lê.
-- `config/bookmarks.json` — favoritos sugeridos no primeiro uso (dado
-  estático por enquanto; sem UI própria ainda — ver KNOWN_ISSUES.md).
+- `config/bookmarks.json` — favoritos sugeridos no primeiro uso.
+  `scripts/package.sh` transforma cada um num atalho real no menu que a
+  própria engine mostra ao abrir o BrowserNro (um item por favorito, além
+  da página inicial) — não é uma UI de favoritos dentro do navegador em si
+  (isso ainda não existe — ver KNOWN_ISSUES.md), mas já funciona como
+  "lançador rápido" de páginas.
 - `input/controls.json` — mapeamento de controles do BrowserNro, documentando
   o que já é nativo da engine e o que é extensão planejada (ver
   ARCHITECTURE.md § Entrada).

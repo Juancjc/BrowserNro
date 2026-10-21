@@ -58,6 +58,33 @@ marcados **[herdado]** vêm da engine de terceiros (chromium-nx); itens
 - **[BrowserNro] Nenhuma medição própria de uso de RAM/CPU em hardware**
   ainda existe — depende de teste em console real (TESTING.md, seção 4).
 
+## WebGPU / sites atrás de Cloudflare Turnstile
+
+- **[herdado/testado] Sites que dependem de WebGPU não funcionam.** Testamos
+  isso de verdade contra `https://ultimatepokeidle.com/` (protegido por
+  Cloudflare Turnstile, cujo widget tenta usar WebGPU): a página carrega e o
+  JavaScript roda, mas o Turnstile nunca passa da verificação porque o
+  Chromium não consegue criar um contexto WebGPU
+  (`Failed to create WebGPU Context Provider`).
+  - Investigamos uma correção via SwiftShader (o Vulkan por software que já
+    vem dentro do pacote `chromium-shell` da Debian) — mesmo apontando
+    `VK_ICD_FILENAMES` para o ICD do SwiftShader e passando
+    `--use-vulkan=swiftshader --enable-unsafe-swiftshader`, a falha persiste:
+    `CommandBufferHelper::AllocateRingBuffer() failed`, um erro genérico de
+    alocação de memória compartilhada do Chromium, não específico do
+    WebGPU/Vulkan.
+  - Isso bate com uma limitação que o próprio chromium-nx documenta: memória
+    compartilhada é um recurso escasso no Horizon OS (poucos objetos
+    disponíveis no console inteiro). O WebGPU precisa de buffers adicionais
+    além dos que o GLES já usa, o que pode simplesmente não caber nesse
+    modelo de memória.
+  - **Conclusão: sites protegidos por verificações que dependem de WebGPU
+    (como o Cloudflare Turnstile nesse modo) provavelmente não vão
+    funcionar no BrowserNro**, e não é algo que uma flag de linha de
+    comando resolve — exigiria mudanças profundas na forma como o `gx`
+    gerencia memória compartilhada, se é que é possível dentro do desenho
+    atual. Não está no roadmap por falta de um caminho viável conhecido.
+
 ## Rede
 
 - **[herdado] HTTPS depende do NAT em modo usuário** (`nat.c`) entre a rede
